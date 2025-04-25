@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="/styles.css">
+
+</head>
+<body>
+    
+
+    <form action="/pacientes" method="POST" enctype="multipart/form-data">
+        <h1>Registro de un nuevo paciente</h1>
+        <!-- Campos de Paciente -->
+        <label for="nombre_paciente">Nombre:</label>
+        <input type="text" name="nombre_paciente" id="nombre_paciente" required><br><br>
+       
+        <label for="apellido_paciente">Apellido:</label>
+        <input type="text" name="apellido_paciente" id="apellido_paciente" required><br><br>
+
+        <label for="fecha_nac">Fecha de Nacimiento:</label>
+        <input type="date" name="fecha_nac" id="fecha_nac" required><br><br>
+       
+        <label for="telefono">Teléfono:</label>
+        <input type="number" name="telefono" id="telefono" required><br><br>
+
+        <label for="domicilio">Domicilio:</label>
+        <input type="text" name="domicilio" id="domicilio" required><br><br>
+
+        <label for="imagen">Imagen:</label>
+        <input type="file" name="imagen" id="imagen" accept="image/*"><br><br>
+
+        <!-- Campos de Usuario -->
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required><br><br>
+
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" name="contrasena" id="contrasena" required><br><br>
+        
+        <label for="rol">Rol:</label>
+        <select name="rol" id="rol" required>
+        <% roles.forEach(rol => { %>
+        <option value="<%= rol.id_rol %>"><%= rol.nombre_rol %></option>
+        <% }); %>
+        </select><br><br>
+
+        <button type="submit">Registrar</button>
+    </form>
+</body>
+</html>
+

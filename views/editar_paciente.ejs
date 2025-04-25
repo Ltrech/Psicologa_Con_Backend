@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Paciente</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #007BFF;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="file"] {
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    .imagen-actual {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .imagen-actual img {
+      max-width: 150px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Editar Paciente</h2>
+    <form action="/admin/editar/<%= paciente.Id_pacientes %>" method="POST" ...
+
+    <form action="/admin/editar/<%= paciente.id_pacientes %>" method="POST" enctype="multipart/form-data">
+  
+      <label for="nombre_paciente">Nombre:</label>
+      <input type="text" name="nombre_paciente" value="<%= paciente.nombre_paciente %>" required>
+
+      <label for="apellido_paciente">Apellido:</label>
+      <input type="text" name="apellido_paciente" value="<%= paciente.apellido_paciente %>" required>
+
+      <label for="email">Email:</label>
+      <input type="email" name="email" value="<%= paciente.email %>" required>
+
+      <label for="telefono">Teléfono:</label>
+      <input type="tel" name="telefono" value="<%= paciente.telefono %>" required>
+
+      <label for="domicilio">Domicilio:</label>
+      <input type="text" name="domicilio" value="<%= paciente.domicilio %>" required>
+
+      <label for="fecha_nac">Fecha de nacimiento:</label>
+      <input type="date" name="fecha_nac" value="<%= paciente.fecha_nac.toISOString().split('T')[0] %>" required>
+      <label for="rol">Rol:</label>
+    <select name="rol" required>
+    <% roles.forEach((rol) => { %>
+    <option value="<%= rol.id_rol %>" <%= rol.id_rol === paciente.id_rol ? 'selected' : '' %> >
+      <%= rol.nombre_rol %>
+    </option>
+    <% }); %>
+    </select>
+
+      <div class="imagen-actual">
+        <% if (paciente.imagen) { %>
+          <p>Imagen actual:</p>
+          <img src="/uploads/<%= paciente.imagen %>" alt="Imagen del paciente">
+        <% } else { %>
+          <p>No hay imagen cargada.</p>
+        <% } %>
+      </div>
+
+      <label for="imagen">Cambiar imagen:</label>
+      <input type="file" name="imagen" accept="image/*">
+
+      <button type="submit">Guardar Cambios</button>
+    </form>
+  </div>
+</body>
+</html>
