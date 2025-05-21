@@ -2,11 +2,13 @@ const mensajeError = document.getElementsByClassName("error")[0];
 
 document.getElementById("login-form").addEventListener("submit", async(e) => { // (e) es el evento
     e.preventDefault();
-    const user = e.target.children.user.value;
-    const password = e.target.children.password.value;
+
+    const user = document.getElementById("user").value;
+    const password = document.getElementById("password").value;
     
     // Nos comunicamos con nuestro backend usando fetch
-    const res = await fetch("http://localhost:3000/api/login",{
+    const res = await fetch("/usuarios/login", {
+
         method:"POST",
         headers:{
           "Content-Type" : "application/json"

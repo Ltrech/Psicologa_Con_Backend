@@ -1,6 +1,7 @@
 // CONFIGURAR LO QUE SERIA UN SERVIDOR CON LAS MINIMAS PRESTACIONES PARA CORRER EXPRESS
 // Que este escuchando y tengamos una ruta principal "/" en el proyectoconst express = require("express");
 
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
@@ -9,6 +10,13 @@ app.use(express.urlencoded({ extended: true }));
 
 const session = require('express-session');
 
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+const authRoutes = require("./routers/auth.routes");
+app.use("/usuarios", authRoutes); 
+
+
 app.use(session({
   secret: 'mi-super-clave-secreta',
   resave: false,
@@ -16,14 +24,12 @@ app.use(session({
 }));
 
 
+
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
 
 //LOGIN//
-
-
-
 
 // Para que admin.ejs funcione
 const methodOverride = require('method-override');
@@ -67,8 +73,9 @@ app.use('/uploads', express.static('uploads'));
 
 app.use(express.static('public'));
 
-const usuariosRouter = require('./routers/usuarios.router');
-app.use('/usuarios', usuariosRouter);
+////const usuariosRouter = require('./routers/usuarios.router');
+//app.use('/usuarios', usuariosRouter);///
+
 
 const pacientesRouter = require('./routers/pacientes.router');
 app.use('/pacientes', pacientesRouter);

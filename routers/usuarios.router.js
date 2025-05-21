@@ -9,6 +9,8 @@ const controller = require("../controllers/usuarios.controller");
 // Para todos los productos
 router.get('/', controller.alluser);
 
+
+
 // Para un producto
 router.get('/:id_usuarios', controller.showusuarios);
 

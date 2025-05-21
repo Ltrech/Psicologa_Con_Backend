@@ -340,7 +340,6 @@ html{
     justify-content: center;
     transition: .3s;
 }.sobremi .fila .col .contenedor-intereses .interes:hover{
-    background-color: #851cb6;
 }
 .sobremi .fila .col .contenedor-intereses .interes i{
     font-size: 30px;
@@ -793,4 +792,24 @@ footer .arriba:hover{
     .contacto .col iframe {
         height: 200px;  /* Ajustar aún más para móviles pequeños */
     }
+}
+.perfil-usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+.perfil-usuario img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    object-fit: cover;
+}
+
+.perfil-usuario span {
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
 }

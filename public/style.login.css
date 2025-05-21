@@ -1,7 +1,8 @@
 html {
     --s: 47px; /* control the size*/
-    --c1: #1bb0ce;
-    --c2: #dad6ca;
+    --c1: #851cb6;
+    --c2: #1a0111;
+    
     
     --_g1: 
       var(--c1)   calc(25%/3) ,#0000 0 calc(50%/3),
@@ -32,11 +33,15 @@ body{
 
 .form-container{
     width: 500px;
-    background-color:white;
+    background-color:rgb(73, 32, 60);
     border-radius: 10px; 
     padding: 50px;
 }
 
+.form-container h1{
+    color:white;
+    text-align: center;
+}
 form {
     display: flex;
     flex-direction: column;
@@ -45,6 +50,7 @@ form {
 
 form+p, form p{
     text-align: center;
+    color: white;
 }
 
 input, button{
@@ -55,7 +61,7 @@ input, button{
 }
 
 button{
-    background-color: #1bb0ce; /* Cambiar color segun fondo */
+    background-color: #1a0111; /* Cambiar color segun fondo */
     color: white;
     font-weight: bold;
     cursor: pointer;

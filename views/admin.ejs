@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <title>Panel de Administración - Pacientes</title>
     <style>
+
+        
+*{
+    box-sizing: border-box;
+    font-family: 'Work Sans';
+    margin: 0;
+    padding: 0;
+}
         body {
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
@@ -12,12 +20,78 @@
             color: #333;
         }
 
-        h1 {
-            color: #4a4a4a;
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 2.5em;
-        }
+        .contenedor-header {
+    background: #2f293d;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+        .contenedor-header header {
+    max-width: 1500px;
+    margin: auto;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.contenedor-header header .logo {
+    margin-left: 0; /* Elimina cualquier margen que se pueda aplicar al logo de texto */
+    padding: 0;
+}
+.contenedor-header header nav ul {
+    display: flex;
+    list-style: none;
+    margin-left:auto; /* Esto está bien */
+    justify-content: flex-end; /* NUEVO: alinea todo a la derecha */
+    align-items: center;
+    gap: 20px; /* Espaciado entre enlaces */
+}
+.contenedor-header header nav ul li a {
+    text-align: none;
+    color: white;
+    margin: 0 15px;
+    padding: 3px;
+    transition: .5s;
+    text-decoration: none;
+}
+#btnCerrarSesion {
+    margin: 0 15px;
+}
+
+
+#btnCerrarSesion button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    padding: 3px;
+    transition: color 0.3s;
+    text-decoration: none;
+    margin: 0;
+}
+
+
+#btnCerrarSesion button:hover {
+    color: #921cb6;
+}
+
+.contenedor-header header nav ul li a:hover {
+    color: #921cb6;
+}
+
+h1 {
+    color: #4a4a4a;
+    text-align: center;
+    margin-top: 130px; /* NUEVO: separa del header fijo */
+    margin-bottom: 40px;
+    font-size: 2.5em;
+}
+
 
         .acciones-superiores {
             display: flex;
@@ -157,12 +231,33 @@
     </style>
 </head>
 <body>
+    
+     <!-- MENU ENCABEZADO -->
+     <div class="contenedor-header">
+        <header>
+            
+            <nav id="nav">
+                <ul>
+                    <li><a href="/psicologa">CREA Salud mental</a></li>
+                    <li><a href="/registro">Agregar nuevo paciente</a></li>
+                    <li><a href="/admin/imagenes">Modificar imágenes de tu pantalla principal</a></li>
+
+                    <li id="btnCerrarSesion">
+                        <button onclick="cerrarSesion()">Cerrar sesión</button>
+                    </li>
+                    
+                </ul>
+    
+                
+            </nav>
+            <div class="nav-responsive" onclick="mostrarOcultarMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </header>
+    </div>
     <h1>Listado de Pacientes</h1>
 
-    <div class="acciones-superiores">
-        <a href="/registro">Agregar nuevo paciente</a>
-        <a href="/admin/imagenes">Modificar imágenes de tu pantalla principal</a>
-    </div>
+    
 
     <table>
         <thead>
@@ -223,6 +318,7 @@
             <% }) %>
         </tbody>
     </table>
+    <script src="/scrip.js"></script>
     <script>
         function darDeBaja(id) {
           if (confirm("¿Estás seguro de dar de baja este paciente?")) {
@@ -244,6 +340,7 @@
           }
         }
       </script>
-      
+     
+
 </body>
 </html>
