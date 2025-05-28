@@ -6,12 +6,16 @@ const router = express.Router();
 const controller = require("../controllers/historia_clinica.controller");
 
 //// METODO GET  /////
+router.post('/historia', controller.agregarHistoriaClinica);
+router.put('/historia/:id', controller.editarHistoriaClinica);
+
 
 // Para todos los productos
 router.get('/', controller.allhc);
+// Mostrar vista con paciente + historia clínica
+router.get('/paciente/:id_pacientes', controller.mostrarPacienteConHistoria);
 
-// Para un producto
-router.get('/:id_hc', controller.showhc);
+router.delete('/historia/:id', controller.eliminarHistoriaClinica);
 
 
 // EXPORTAR ROUTERS

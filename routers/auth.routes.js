@@ -12,12 +12,9 @@ const authorization = require("../middlewares/authorization");
 
 // --- RUTAS DE AUTENTICACIÓN ---
 
+
 // Página de login (HTML o render EJS, elegí solo UNA)
 router.get("/login", (req, res) => {
-    // Si usás EJS:
-    // res.render("login");
-
-    // Si usás HTML:
     res.sendFile(path.join(__dirname, "../views/login.html")); 
 });
 

@@ -56,5 +56,53 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/api/imagenes')
+        .then(res => res.json())
+        .then(data => {
+            const inicio = document.querySelector(".contenedor-img");
+            const servicios = document.querySelector(".portfolio-servicios");
+            const instalaciones = document.querySelector(".galeria");
+
+            data.forEach(img => {
+                if (img.seccion === "inicio" && inicio) {
+                    inicio.innerHTML = `<img src="${img.url}" alt="Inicio">`;
+                }
+
+                if (img.seccion === "servicios" && servicios) {
+                    const html = `
+                        <section>
+                            <h3>${img.titulo}</h3>
+                            <div class="img-servicios">
+                                <img src="${img.url}" alt="">
+                                <div class="overlay">
+                                    <h3>CREA</h3>
+                                    <p>Salud Mental</p>
+                                    <p>${img.descripcion}</p>
+                                </div>
+                            </div>
+                            <p>${img.descripcion}</p>
+                        </section>
+                    `;
+                    servicios.insertAdjacentHTML('beforeend', html);
+                }
+
+                if (img.seccion === "instalaciones" && instalaciones) {
+                    const html = `
+                        <div class="proyecto">
+                            <img src="${img.url}" alt="">
+                            <div class="overlay">
+                                <h3>CREA</h3>
+                                <p>Salud Mental</p>
+                                <p>${img.descripcion}</p>
+                            </div>
+                        </div>
+                    `;
+                    instalaciones.insertAdjacentHTML('beforeend', html);
+                }
+            });
+        });
+});
+
 // Función para cerrar sesión
 

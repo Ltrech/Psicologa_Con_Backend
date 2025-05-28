@@ -2,6 +2,19 @@ const db = require("../db/db");
 
 const rolControllers = require("./rol.controller");
 
+
+const vistaRoles = (req, res) => {
+    const sql = "SELECT * FROM rol";
+    db.query(sql, (error, rows) => {
+        if (error) {
+            return res.status(500).send("Error al cargar la vista de roles");
+        }
+        res.render("rol", { roles: rows });
+    });
+};
+
+
+
 //// METODO GET  /////
 
 // Para todos los Paciente
@@ -16,22 +29,9 @@ const allroles = (req, res) => {
 };
 
 
-// para un rol//
-const showRol = (req, res) => {
-    const {id_rol} = req.params;
-    const sql = "SELECT * FROM rol WHERE id_rol = ?";
-    db.query(sql,[id_rol], (error, rows) => {
-        console.log(rows);
-        if(error){
-            return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
-        }
-        if(rows.length == 0){
-            return res.status(404).send({error : "ERROR: No existe el rol"});
-        };
-        res.json(rows[0]); 
-        // me muestra el elemento en la posicion cero si existe.
-    }); 
-};
+// para un rol
+// //
+
 
 // Método POST para insertar un nuevo rol
 const storeRol = (req, res) => {
@@ -58,7 +58,7 @@ const storeRol = (req, res) => {
             nombre_rol
         };
 
-        res.status(201).json(nuevoRol); // Respuesta con el rol creado
+        res.redirect('/rol/vista');
     });
 };
 
@@ -89,12 +89,7 @@ const updateRol = (req, res) => {
         }
 
         // Construir la respuesta con el rol actualizado
-        const rolActualizado = {
-            id_rol: id_rol,
-            nombre_rol: nombre_rol
-        };
-
-        res.json(rolActualizado); // Respuesta con el rol actualizado
+        res.redirect('/rol/vista'); // Respuesta con el rol actualizado
     });
 };
 
@@ -118,16 +113,16 @@ const deleteRol = (req, res) => {
         }
 
         // Respuesta exitosa
-        res.status(200).json({ message: `Rol con id ${id_rol} eliminado exitosamente` });
+        res.redirect('/rol/vista');
     });
 };
 
 
 module.exports = {
     allroles,
-    showRol,
     storeRol,
     updateRol,
-    deleteRol
+    deleteRol,
+    vistaRoles
     
 };

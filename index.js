@@ -25,8 +25,9 @@ app.use(session({
 
 
 
-app.set('view engine', 'ejs');
-app.set('views', './views');
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views"); // por si no está
+
 
 
 //LOGIN//
@@ -88,9 +89,15 @@ app.use('/rol_por_usuario', rol_por_usuarioRouter);
 
 const hcRouter = require('./routers/historia_clinica.router');
 app.use('/historia_clinica', hcRouter);
+app.use('/', hcRouter);
 
 const tipo_sesionRouter = require('./routers/tipo_sesion.router');
 app.use('/tipo_sesion', tipo_sesionRouter);
+
+const imagenesRoutes = require('./routers/imagenes.routes');
+app.use('/api/imagenes', imagenesRoutes);
+
+
 
 // Ruta principal
 app.get("/", (req, res) => {

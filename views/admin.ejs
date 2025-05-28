@@ -15,20 +15,20 @@
         body {
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
-            padding: 40px 20px;
+            padding-top: 80px;
             background-color: #fefefe;
             color: #333;
         }
 
-        .contenedor-header {
-    background: #2f293d;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 99;
+     .contenedor-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #4a4a4a; 
+  z-index: 999;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-        .contenedor-header header {
+.contenedor-header header {
     max-width: 1500px;
     margin: auto;
     display: flex;
@@ -176,6 +176,15 @@ h1 {
         .btn-eliminar:hover {
             background-color: #e04a44;
         }
+        .btn-historia {
+    background-color: #8e44ad;
+    margin: 0 5px;
+}
+
+.btn-historia:hover {
+    background-color: #732d91;
+}
+
 
         .imagen-paciente {
     width: 80px;
@@ -231,7 +240,8 @@ h1 {
     </style>
 </head>
 <body>
-    
+    <%- include("partials/header") %>
+
      <!-- MENU ENCABEZADO -->
      <div class="contenedor-header">
         <header>
@@ -241,6 +251,7 @@ h1 {
                     <li><a href="/psicologa">CREA Salud mental</a></li>
                     <li><a href="/registro">Agregar nuevo paciente</a></li>
                     <li><a href="/admin/imagenes">Modificar imágenes de tu pantalla principal</a></li>
+                    <li><a href="/rol/vista">Roles de Usuario</a></li>
 
                     <li id="btnCerrarSesion">
                         <button onclick="cerrarSesion()">Cerrar sesión</button>
@@ -304,16 +315,20 @@ h1 {
                     <td><%= paciente.rol ? paciente.rol : 'Sin rol' %></td>
 
                     <td>
-                        <form action="/admin/editar/<%= paciente.id_pacientes %>" method="get" style="display:inline;">
-                            <button type="submit" class="btn btn-editar">Editar</button>
-                        </form>
-                        
-                        <button class="btn btn-eliminar" onclick="darDeBaja('<%= paciente.id_pacientes %>')">
-                            Eliminar
-                        </button>
-                        
-                          
-                    </td>
+                    <form action="/admin/editar/<%= paciente.id_pacientes %>" method="get" style="display:inline;">
+                        <button type="submit" class="btn btn-editar">Editar</button>
+                    </form>
+
+                    <form action="/historia_clinica/paciente/<%= paciente.id_pacientes %>" method="get" style="display:inline;">
+                         <button type="submit" class="btn btn-historia">Historia Clínica</button>
+                    </form>
+
+                    
+                    <button class="btn btn-eliminar" onclick="darDeBaja('<%= paciente.id_pacientes %>')">
+                        Eliminar
+                    </button>
+</td>
+
                 </tr>
             <% }) %>
         </tbody>
