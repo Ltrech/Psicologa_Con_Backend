@@ -11,9 +11,10 @@ router.put('/historia/:id', controller.editarHistoriaClinica);
 
 
 // Para todos los productos
-router.get('/', controller.allhc);
+
 // Mostrar vista con paciente + historia clínica
 router.get('/paciente/:id_pacientes', controller.mostrarPacienteConHistoria);
+
 
 router.delete('/historia/:id', controller.eliminarHistoriaClinica);
 

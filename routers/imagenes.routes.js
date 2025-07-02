@@ -17,10 +17,24 @@ const storage = multer.diskStorage({
         cb(null, uniqueName);
     }
 });
-
 const upload = multer({ storage });
 
-router.get('/', controller.obtenerImagenes);
+// Esta es la ruta que maneja POST /imagenes
 router.post('/', upload.single('imagen'), controller.subirImagen);
+
+// Esta muestra el formulario con imágenes (GET /admin)
+router.get('/admin', controller.renderAdminImagenes);
+
+router.delete('/:id', controller.eliminarImagen);
+
+router.post('/:id/editar', upload.single('imagen'), controller.editarImagen);
+
+
+/// para la pagina psicologa
+router.get('/lista', controller.obtenerImagenesPublicas);
+
+
+router.post('/frase', controller.guardarFrase);
+router.get('/lista', controller.listarContenido);
 
 module.exports = router;

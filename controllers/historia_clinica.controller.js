@@ -4,33 +4,7 @@ const rolControllers = require("./historia_clinica.controller");
 
 //// METODO GET  /////
 
-// Para todos los Paciente
-const allhc = (req, res) => {
-    const sql = "SELECT * FROM historia_clinica";
-    db.query(sql, (error, rows) => {
-        if(error){
-            return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
-        }
-        res.json(rows);
-    }); 
-};
 
-// para un rol//
-const showhc = (req, res) => {
-    const {id_hc} = req.params;
-    const sql = "SELECT * FROM historia_clinica WHERE id_hc = ?";
-    db.query(sql,[id_hc], (error, rows) => {
-        console.log(rows);
-        if(error){
-            return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
-        }
-        if(rows.length == 0){
-            return res.status(404).send({error : "ERROR: No existe la Historia clinica"});
-        };
-        res.json(rows[0]); 
-        // me muestra el elemento en la posicion cero si existe.
-    }); 
-};
 
 // Mostrar paciente + historia clínica
 // Mostrar paciente + historia clínica
@@ -100,7 +74,11 @@ const agregarHistoriaClinica = (req, res) => {
             return res.status(500).send("Error interno al guardar la historia clínica.");
         }
 
-        res.redirect(`/historia_clinica/paciente/${id_paciente}`);
+         res.redirect(`/historia_clinica/paciente/${id_paciente}`);
+
+
+
+         
     });
 };
 
@@ -129,9 +107,10 @@ const editarHistoriaClinica = (req, res) => {
                 return res.redirect("/admin"); // fallback si no encuentra el paciente
             }
 
-            const id_paciente = rows[0].id_paciente;
-            res.redirect(`/historia_clinica/paciente/${id_paciente}`);
+             const { id_paciente } = req.body;
+        res.redirect(`/historia_clinica/paciente/${id_paciente}`);
         });
+        
     });
 };
 
@@ -146,15 +125,14 @@ const eliminarHistoriaClinica = (req, res) => {
             return res.status(500).send("Error al eliminar la historia clínica.");
         }
 
-        res.redirect('/admin');
+        res.redirect("/admin");
     });
 };
 
 
 
 module.exports = {
-    allhc,
-    showhc,
+   
     mostrarPacienteConHistoria,
     agregarHistoriaClinica,
     editarHistoriaClinica,

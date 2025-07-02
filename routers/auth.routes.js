@@ -30,9 +30,13 @@ router.post("/logout", (req, res) => {
         path: "/"      // Muy importante que coincida con la cookie original
     });
 
-    return res.status(200).json({ message: "Sesión cerrada correctamente" });
+   
+    res.redirect('/psicologa')
+    
 });
 
+// Cerrar sesión
+router.post("/logout", authController.logout);
 
 
 // Obtener datos del perfil (requiere estar logueado)

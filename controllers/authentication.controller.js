@@ -88,14 +88,20 @@ res.cookie("jwt", token, cookieOption);
 const connection = require('../db/db');  // Importamos la conexión
 
 const verPerfil = (req, res) => {
-    const userId = req.userId; // Lo tomamos del middleware JWT
+    const userId = req.userId; // este valor lo pasa tu middleware JWT
 
     const sql = `
-    SELECT p.nombre_paciente AS nombre, p.apellido_paciente AS apellido, p.imagen
-    FROM pacientes p
-    INNER JOIN usuarios u ON p.usuario_id = u.id_usuarios
-    WHERE u.id_usuarios = ? AND u.fecha_baja IS NULL;
-`;
+        SELECT 
+            p.nombre_paciente AS nombre,
+            p.apellido_paciente AS apellido,
+            p.imagen,
+            r.nombre_rol AS rol
+        FROM usuarios u
+        LEFT JOIN pacientes p ON p.usuario_id = u.id_usuarios
+        INNER JOIN rol_por_usuario ru ON ru.id_usuarios = u.id_usuarios
+        INNER JOIN rol r ON ru.id_rol = r.id_rol
+        WHERE u.id_usuarios = ? AND u.fecha_baja IS NULL;
+    `;
 
     connection.query(sql, [userId], (error, results) => {
         if (error) {
@@ -104,7 +110,7 @@ const verPerfil = (req, res) => {
         }
 
         if (results.length > 0) {
-            return res.json(results[0]); // Enviamos la información del perfil
+            return res.status(200).json(results[0]); // nombre, apellido, imagen, rol
         } else {
             return res.status(404).json({ message: 'Perfil no encontrado' });
         }
@@ -112,11 +118,25 @@ const verPerfil = (req, res) => {
 };
 
 
+const logout = (req, res) => {
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "Lax",
+    path: "/"
+  });
+
+  req.session?.destroy?.(() => {
+    res.redirect("/login.html"); // ✅ Redirige correctamente
+  });
+};
+
 
 // Exportar correctamente usando module.exports
 const methods = {
   login,
-  verPerfil
+  verPerfil,
+  logout
 };
 
 module.exports = { methods };

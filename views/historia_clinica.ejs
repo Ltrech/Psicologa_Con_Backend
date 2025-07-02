@@ -99,11 +99,12 @@
             <p><strong>Descripción:</strong> <%= historia.descripcion %></p>
             <p><strong>Tratamiento:</strong> <%= historia.tratamiento %></p>
             <button class="btn btn-primary" onclick="abrirEditarHistoria(<%= historia.id_hc %>, '<%= historia.descripcion %>', '<%= historia.tratamiento %>', '<%= historia.fecha_registro.toISOString() %>')">Editar</button>
-            <form action="/historia/<%= historia.id_hc %>?_method=DELETE" method="POST" style="display:inline;">
+            <form action="/historia_clinica/historia/<%= historia.id_hc %>?_method=DELETE" method="POST" style="display:inline;">
             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta historia clínica?')">
             Eliminar
             </button>
             </form>
+
             <% } else { %>
             <p>No se encontró historia clínica registrada para este paciente.</p>
             <button class="btn btn-success" onclick="abrirModalAgregar()">Agregar Historia Clínica</button>
@@ -117,27 +118,31 @@
         <div class="modal-content">
             <h5>Editar Historia Clínica</h5>
             <form id="formEditarHistoria" method="POST">
-                <input type="hidden" name="_method" value="PUT">
-                <label>Fecha de Registro</label>
-                <input type="date" name="fecha_registro" id="editFechaRegistro" class="form-control" required><br>
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="id_paciente" value="<%= paciente.Id_pacientes %>">
 
-                <label>Descripción</label>
-                <textarea name="descripcion" id="editDescripcion" class="form-control" required></textarea><br>
+    <label>Fecha de Registro</label>
+    <input type="date" name="fecha_registro" id="editFechaRegistro" class="form-control" required><br>
 
-                <label>Tratamiento</label>
-                <textarea name="tratamiento" id="editTratamiento" class="form-control" required></textarea><br>
+    <label>Descripción</label>
+    <textarea name="descripcion" id="editDescripcion" class="form-control" required></textarea><br>
 
-                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                <button type="button" class="btn btn-secondary" onclick="cerrarModalEditar()">Cancelar</button>
-            </form>
+    <label>Tratamiento</label>
+    <textarea name="tratamiento" id="editTratamiento" class="form-control" required></textarea><br>
+
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <button type="button" class="btn btn-secondary" onclick="cerrarModalEditar()">Cancelar</button>
+</form>
+
         </div>
     </div>
+    
 
     <!-- Modal Agregar -->
     <div id="modalAgregarHistoria" class="modal">
         <div class="modal-content">
             <h5>Agregar Historia Clínica</h5>
-            <form action="/historia" method="POST">
+            <form action='/historia_clinica/historia' method="POST">
                 <input type="hidden" name="id_paciente" value="<%= paciente.Id_pacientes %>">
                
                 <label>Fecha de Registro</label>
@@ -161,7 +166,7 @@
             document.getElementById('editTratamiento').value = tratamiento;
             document.getElementById('editFechaRegistro').value = fecha_registro.split('T')[0];
             const form = document.getElementById('formEditarHistoria');
-            form.action = `/historia/${id}?_method=PUT`;
+            form.action = `/historia_clinica/historia/${id}?_method=PUT`;
             document.getElementById('modalEditarHistoria').classList.add('show');
         }
 
