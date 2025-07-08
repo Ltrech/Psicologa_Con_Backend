@@ -110,6 +110,53 @@ html{
     cursor: pointer;
     display: none;
 }
+/* Botón de Cerrar Sesión para que parezca un enlace */
+#btnCerrarSesion button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 15px;
+    padding: 3px;
+    transition: 0.3s;
+}
+
+#btnCerrarSesion button:hover {
+    color: #921cb6;
+}
+
+/* Perfil de usuario alineado horizontalmente */
+/* Alinear nav para que perfil quede a la derecha */
+.contenedor-header header nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Perfil alineado a la derecha */
+.perfil-usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+.perfil-usuario span {
+    color: #fff;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.perfil-usuario img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #921cb6;
+}
+
 
 
 /* SECCION I N I C I O */
@@ -340,8 +387,9 @@ html{
     justify-content: center;
     transition: .3s;
 }.sobremi .fila .col .contenedor-intereses .interes:hover{
-    background-color: #851cb6;
+    background-color: #7e1cb6;
 }
+
 .sobremi .fila .col .contenedor-intereses .interes i{
     font-size: 30px;
     margin-bottom: 10px;
@@ -793,4 +841,24 @@ footer .arriba:hover{
     .contacto .col iframe {
         height: 200px;  /* Ajustar aún más para móviles pequeños */
     }
+}
+.perfil-usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+.perfil-usuario img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    object-fit: cover;
+}
+
+.perfil-usuario span {
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
 }

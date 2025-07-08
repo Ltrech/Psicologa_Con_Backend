@@ -1,39 +1,21 @@
-import jsonwebtoken from "jsonwebtoken";
-import dotenv from "dotenv";
-import {usuarios} from "../controllers/authentication.controller.js";
+const jwt = require("jsonwebtoken");
 
-dotenv.config();
+module.exports = (req, res, next) => {
+    const token = req.cookies.jwt;
 
-function soloAdmin(req, res, next){
-    const logueado = revisarCookie(req);
-    if(logueado) return next();
-    return res.redirect("/");
-}
+    if (!token) {
+        return res.status(403).send({ auth: false, message: "Token no proporcionado" });
+    }
 
-function soloPublico(req, res, next){
-    const logueado = revisarCookie(req);
-    if(!logueado) return next();
-    return res.redirect("/admin");
-}
-
-function revisarCookie(req){
-    try{
-        const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4);
-        const decodficada = jsonwebtoken.verify(cookieJWT,process.env.JWT_SECRET);
-        console.log(decodficada);
-        const usuarioAControlar = usuarios.find(usuario => usuario.user === decodficada.user);
-        console.log(usuarioAControlar);
-        if(!usuarioAControlar){
-            return false
+    jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
+        if (error) {
+            return res.status(401).send({ auth: false, message: "Token inválido" });
         }
-        return true;
-    }
-    catch{
-        return false;
-    }
-}
 
-export const methods = {
-    soloAdmin,
-    soloPublico
-}
+        req.userId = decoded.id;
+        req.userEmail = decoded.email;
+        req.userRol = decoded.rol;
+
+        next();
+    });
+};

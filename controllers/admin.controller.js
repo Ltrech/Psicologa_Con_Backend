@@ -180,7 +180,7 @@ const cambiarImagenPrincipal = (req, res) => {
     });
   };
 
-// ✅ Exportar todo desde un solo lugar
+
 module.exports = {
     mostrarPacientes,
     mostrarFormularioEditar,

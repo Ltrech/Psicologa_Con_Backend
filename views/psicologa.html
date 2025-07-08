@@ -8,8 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Psicologa</title>
     <link rel="stylesheet" href="/Styles_psicologa.css">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';">
+
 </head>
 <body>
+   
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <a href="https://api.whatsapp.com/send?phone=1151063224&text=Hola!Crea%20Salud%20Mental%20te%20espera." class="float" target="_blank">
     <i class="fa fa-whatsapp my-float"></i>
@@ -17,32 +20,47 @@
     <!-- MENU ENCABEZADO -->
     <div class="contenedor-header">
         <header>
-            
             <div class="logo">
                 <a href="#">CREA Salud mental</a>
             </div>
             <nav id="nav">
-                <ul>
-                    <li><a href="#inicio" onclick="seleccionar()">INICIO</a></li>
-                    <li><a href="#sobremi" onclick="seleccionar()">SOBRE MI</a></li>
-                    <li><a href="#servicios" onclick="seleccionar()">SERVICIOS</a></li>
-                    <li><a href="#portfolio" onclick="seleccionar()">INSTALACIONES</a></li>
-                    <li><a href="#contacto" onclick="seleccionar()">CONTACTO</a></li>
+  <ul>
+    <li><a href="#inicio" onclick="seleccionar()">INICIO</a></li>
+    <li><a href="#sobremi" onclick="seleccionar()">SOBRE MI</a></li>
+    <li><a href="#servicios" onclick="seleccionar()">SERVICIOS</a></li>
+    <li><a href="#portfolio" onclick="seleccionar()">INSTALACIONES</a></li>
+    <li><a href="#contacto" onclick="seleccionar()">CONTACTO</a></li>
+    <li id="linkAdmin" style="display: none;"><a href="/admin">ADMIN</a></li>
 
-                    <a href="./login.html">Inciar Sesion</a>
-                </ul>
-            </nav>
+    <!-- Botón Iniciar sesión -->
+    <li id="btnIniciarSesion"><a href="./login.html">INICIAR SESION</a></li>
+
+    <!-- Botón Cerrar sesión -->
+    <li id="btnCerrarSesion" style="display: none;"><a href="#" onclick="cerrarSesion()">CERRAR SESIÓN</a></li>
+
+  </ul>
+
+  <!-- Perfil de usuario fuera de la lista, alineado a la derecha -->
+  <div class="perfil-usuario" id="perfilUsuario" style="display: none;">
+    <span id="nombreUsuario"></span>
+    <img id="imagenUsuario" src="" alt="Perfil" />
+  </div>
+</nav>
+
+
             <div class="nav-responsive" onclick="mostrarOcultarMenu()">
                 <i class="fa-solid fa-bars"></i>
             </div>
         </header>
     </div>
+    
 
     <!-- SECCION INICIO -->
     <section id="inicio" class="inicio">
         <div class="contenido-banner">
             <div class="contenedor-img">
-                <img src="/img/ccc.jfif" alt="Imagen principal">
+                <img id="imagen-principal" src="" alt="Imagen principal">
+
 
             </div>
             <h1>Cecilia Rea</h1>
@@ -63,16 +81,13 @@
                 </a>
             </div>
         </div>
-        <div class="contenido-banner2">
-            
-            <p>“El objetivo de la terapia no es cambiar al paciente, sino ayudarlo a descubrir quién es realmente" (Car Jung)</p>
-               
+       <div class="contenido-banner2">
+        <p id="frase1"></p>
         </div>
         <div class="contenido-banner3">
-            
-            <p>“La verdadera libertad es entender que no siempre controlamos lo que sentimos, pero sí cómo lo vivimos."(Jacques Lacan)</p>
-               
+        <p id="frase2"></p>
         </div>
+
         
 
     </section>
@@ -162,56 +177,13 @@
     </section>
 
 <!-- SERVICIOS -->
-<section id="servicios" >
-
-    <h2>SERVICIOS</h2>
-
-    <div class="portfolio-servicios">
-    <section>
-        <h3>Atención a Niños + 8</h3>
-        <div class="img-servicios">
-            <img src="img/infantil2.jpg" alt="">
-            <div class="overlay">
-                <h3>CREA</h3>
-                <p>Salud Mental</p>
-                <p>Atencion a niños +8</p>
-            </div>
-        </div>
-        
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam beatae labore nam
-            culpa. Cupiditate quae, quibusdam .</p>
-        </section>
-    <section>
-        <h3>Atención a Adolescentes</h3>
-        <div class="img-servicios" >
-            <img src="img/adolescentes1.jpg" alt="">
-            <div class="overlay">
-                <h3>CREA</h3>
-                <p>Salud Mental</p>
-                <p>Atencion a adolescentes</p>
-            </div>
-        </div>
-        
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam beatae labore nam
-            culpa. Cupiditate quae, quibusdam .</p>
-    </section>  
-    <section>
-        <h3>Atención a Adultos</h3>
-        <div class="img-servicios">
-            <img src="img/adultos1.jpg" alt="">
-            <div class="overlay">
-                <h3>CREA</h3>
-                <p>Salud Mental</p>
-                <p>Atencion a adultos</p>
-            </div>
-        </div>
-       
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam beatae labore nam
-                culpa. Cupiditate quae, quibusdam .</p> 
-    </section>     
-</div>   
-
+<section id="servicios">
+  <h2>SERVICIOS</h2>
+  <div id="contenedor-servicios" class="portfolio-servicios">
+    <!-- Se inyectará dinámicamente con JS -->
+  </div>
 </section>
+
 
 
 
@@ -221,7 +193,7 @@
             <h2>INSTALACIONES</h2>
             <div class="galeria">
                 <div class="proyecto">
-                    <img src="img/141257d7-1cf5-4292-9a9c-5a418223d62c.jfif" alt="">
+                    <img src="img/Consultorio2.jfif" alt="">
                     <div class="overlay">
                         <h3>CREA</h3>
                         <p>Salud Mental</p>

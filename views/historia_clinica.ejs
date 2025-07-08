@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historia Clínica</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            padding: 40px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #6c63ff;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        .back {
+            display: block;
+            margin-top: 20px;
+            color: #6c63ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn {
+            padding: 8px 16px;
+            margin-top: 10px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #6c63ff;
+            color: white;
+        }
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-danger {
+         background-color: #dc3545;
+        color: white;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+        }
+        .modal.show {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Datos del Paciente</h2>
+        <p><strong>Nombre:</strong> <%= paciente.nombre_paciente %> <%= paciente.apellido_paciente %></p>
+        <p><strong>Email:</strong> <%= paciente.email %></p>
+        <p><strong>Teléfono:</strong> <%= paciente.telefono %></p>
+        <p><strong>Domicilio:</strong> <%= paciente.domicilio %></p>
+        <p><strong>Fecha de Nacimiento:</strong> <%= paciente.fecha_nac.toISOString().split('T')[0] %></p>
+
+        <hr>
+
+        <h2>Historia Clínica</h2>
+        <% if (historia) { 
+            const fecha = new Date(historia.fecha_registro);
+            const dia = String(fecha.getDate()).padStart(2, '0');
+            const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+            const anio = fecha.getFullYear();
+        %>
+            <p><strong>Fecha de registro:</strong> <%= `${dia}/${mes}/${anio}` %></p>
+            <p><strong>Descripción:</strong> <%= historia.descripcion %></p>
+            <p><strong>Tratamiento:</strong> <%= historia.tratamiento %></p>
+            <button class="btn btn-primary" onclick="abrirEditarHistoria(<%= historia.id_hc %>, '<%= historia.descripcion %>', '<%= historia.tratamiento %>', '<%= historia.fecha_registro.toISOString() %>')">Editar</button>
+            <form action="/historia_clinica/historia/<%= historia.id_hc %>?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta historia clínica?')">
+            Eliminar
+            </button>
+            </form>
+
+            <% } else { %>
+            <p>No se encontró historia clínica registrada para este paciente.</p>
+            <button class="btn btn-success" onclick="abrirModalAgregar()">Agregar Historia Clínica</button>
+        <% } %>
+
+        <a class="back" href="/admin">← Volver al panel</a>
+    </div>
+
+    <!-- Modal Editar -->
+    <div id="modalEditarHistoria" class="modal">
+        <div class="modal-content">
+            <h5>Editar Historia Clínica</h5>
+            <form id="formEditarHistoria" method="POST">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="id_paciente" value="<%= paciente.Id_pacientes %>">
+
+    <label>Fecha de Registro</label>
+    <input type="date" name="fecha_registro" id="editFechaRegistro" class="form-control" required><br>
+
+    <label>Descripción</label>
+    <textarea name="descripcion" id="editDescripcion" class="form-control" required></textarea><br>
+
+    <label>Tratamiento</label>
+    <textarea name="tratamiento" id="editTratamiento" class="form-control" required></textarea><br>
+
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <button type="button" class="btn btn-secondary" onclick="cerrarModalEditar()">Cancelar</button>
+</form>
+
+        </div>
+    </div>
+    
+
+    <!-- Modal Agregar -->
+    <div id="modalAgregarHistoria" class="modal">
+        <div class="modal-content">
+            <h5>Agregar Historia Clínica</h5>
+            <form action='/historia_clinica/historia' method="POST">
+                <input type="hidden" name="id_paciente" value="<%= paciente.Id_pacientes %>">
+               
+                <label>Fecha de Registro</label>
+                <input type="date" name="fecha_registro" class="form-control" required><br>
+
+                <label>Descripción</label>
+                <textarea name="descripcion" class="form-control" required></textarea><br>
+
+                <label>Tratamiento</label>
+                <textarea name="tratamiento" class="form-control" required></textarea><br>
+
+                <button type="submit" class="btn btn-success">Agregar</button>
+                <button type="button" class="btn btn-secondary" onclick="cerrarModalAgregar()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function abrirEditarHistoria(id, descripcion, tratamiento, fecha_registro) {
+            document.getElementById('editDescripcion').value = descripcion;
+            document.getElementById('editTratamiento').value = tratamiento;
+            document.getElementById('editFechaRegistro').value = fecha_registro.split('T')[0];
+            const form = document.getElementById('formEditarHistoria');
+            form.action = `/historia_clinica/historia/${id}?_method=PUT`;
+            document.getElementById('modalEditarHistoria').classList.add('show');
+        }
+
+        function cerrarModalEditar() {
+            document.getElementById('modalEditarHistoria').classList.remove('show');
+        }
+
+        function abrirModalAgregar() {
+            document.getElementById('modalAgregarHistoria').classList.add('show');
+        }
+
+        function cerrarModalAgregar() {
+            document.getElementById('modalAgregarHistoria').classList.remove('show');
+        }
+    </script>
+</body>
+</html>
