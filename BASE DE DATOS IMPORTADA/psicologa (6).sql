@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2025 a las 15:45:14
+-- Tiempo de generación: 09-07-2025 a las 15:53:33
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -45,21 +45,33 @@ INSERT INTO `historia_clinica` (`id_hc`, `id_paciente`, `fecha_registro`, `descr
 (3, 3, '2024-11-07', 'Problemas con la comida', 'Dieta'),
 (4, 4, '2024-11-07', 'Vino amanecido', 'No duerme'),
 (5, 26, '2025-05-01', 'Sabe nadar, de nada', 'le tiene miedo'),
-(11, 25, '2025-04-28', 'Le duele el cuello, mucho mucho', 'Siente dolor de cabeza');
+(11, 25, '2025-04-28', 'Le duele el cuello, mucho mucho', 'Siente dolor de cabeza'),
+(20, 19, '2025-05-30', 'Mira mucha tv Siempre', 'Apagar la tv futbol'),
+(22, 30, '2025-05-06', 'le duele la pancita', 'Tafirol'),
+(23, 20, '2025-05-18', 'Le gusta tomar', 'Cerrar el kiosco'),
+(25, 24, '2025-05-29', 'Sigue con tos', 'Catarro no sirve');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `imagenes`
+-- Estructura de tabla para la tabla `imagenes_inicio`
 --
 
-CREATE TABLE `imagenes` (
-  `id` int(11) NOT NULL,
-  `seccion` enum('inicio','servicios','instalaciones') DEFAULT NULL,
-  `titulo` varchar(100) DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  `descripcion` text DEFAULT NULL
+CREATE TABLE `imagenes_inicio` (
+  `id_imagen` int(11) NOT NULL,
+  `nombre_img` varchar(255) NOT NULL,
+  `tipo` enum('principal','frase') DEFAULT 'principal',
+  `frase` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `imagenes_inicio`
+--
+
+INSERT INTO `imagenes_inicio` (`id_imagen`, `nombre_img`, `tipo`, `frase`) VALUES
+(30, '1750280221871-hero.jfif', 'principal', NULL),
+(31, '', 'frase', '\"La curiosa paradoja es que cuando me acepto a mí mismo, puedo cambiar.\" - Carl Rogers. '),
+(32, '', 'frase', '\"El mayor error que puedes cometer en la vida es tener miedo de cometer errores.\" - Elbert Hubbard. ');
 
 -- --------------------------------------------------------
 
@@ -90,20 +102,21 @@ INSERT INTO `pacientes` (`Id_pacientes`, `nombre_paciente`, `apellido_paciente`,
 (15, 'Luis', 'Trech', '1981-10-09', 1154568988, 'La Querencia 2225', 6, ''),
 (16, 'Ulises', 'Galan', '1981-10-09', 4545658, 'San Joaquin', 6, '1730488969451.jfif'),
 (18, 'Claudio', 'Ferrante', '2024-10-16', 41233333, 'querenci 2233', 15, ''),
-(19, 'Veronica', 'Castro', '1999-10-16', 41233333, 'querenci 2233', 16, '1731441043578.jpg'),
+(19, 'Veronica', 'Castro', '1999-10-16', 41233333, 'querenci 2233', 16, '1749668366334.jpg'),
 (20, 'Roberto', 'Lopez', '2024-11-12', 23131231, 'Los nogales 222', 17, '1731457371412.webp'),
-(21, 'Roman', 'Juan Roman', '2024-09-10', 2147483647, 'San Joaquin 202', 18, ''),
+(21, 'Roman', 'Juan Roman', '2024-09-10', 2147483647, 'San Joaquin 202', 18, '1748458653999.jpg'),
 (22, 'Daniela', 'Mercuri', '1988-06-05', 1169395753, 'Donato Alvarez 225', 19, '1744140515237.jpg'),
 (23, 'Analia', 'Lugones', '1965-10-04', 45456688, 'Bolivar 4534', 20, '1744324154438.jpg'),
 (24, 'Nilda', 'Meza', '1956-04-12', 42120254, 'calle 899 nro2122', 21, ''),
 (25, 'Giselle', 'Trech', '1979-04-30', 1154256658, 'Chile nro2122', 22, ''),
-(26, 'Ruperto', 'Juarez', '1944-06-05', 42120555, 'esteban Cabral 1212', 24, '1745514451531.jpg'),
+(26, 'Ruperto', 'Juarez', '1944-06-05', 42120555, 'esteban Cabral 1212', 24, '1748549810634.jpg'),
 (27, 'Ricardo', 'Centurio', '2001-02-01', 42120555, 'Donato Alvarez 2222', 25, '1745517462283.jpg'),
 (28, 'Marcial', 'Barrios', '1988-05-04', 45658899, 'La Querencia 2355', 26, ''),
 (29, 'luis', 'trech', '1988-06-05', 1145658899, 'Donato Alvarez 2222', 27, ''),
-(30, 'Fernando', 'Gago', '1980-05-04', 42120555, 'Brandsen 805', 28, '1745945597241.jpeg'),
-(31, 'Nancy', 'Vera', '1980-12-01', 1131148114, 'Donato alvarez 1156', 29, '1747754185559.jpg'),
-(32, 'Nancy', 'Vera', '1980-01-13', 42120555, 'Donato Alvarez', 30, '1747754473259.jpg');
+(30, 'Fernando', 'Gago', '1980-05-04', 42120555, 'Brandsen 805', 28, '1750279884740.jfif'),
+(31, 'Nancy', 'Vera', '1980-12-01', 1131148114, 'Donato alvarez 1156', 29, '1749668518575.jpg'),
+(32, 'Nancy', 'Vera', '1980-01-13', 42120555, 'Donato Alvarez', 30, '1747754473259.jpg'),
+(33, 'Diego Armando', 'Maradona', '1967-10-30', 1156558975, 'Fiorito 222', 31, '1751493546112.png');
 
 -- --------------------------------------------------------
 
@@ -149,11 +162,34 @@ INSERT INTO `rol_por_usuario` (`id_usuarios`, `id_rol`) VALUES
 (6, 2),
 (27, 2),
 (16, 2),
-(18, 2),
+(18, 1),
 (28, 2),
 (17, 2),
 (29, 1),
-(30, 2);
+(30, 2),
+(31, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `servicios`
+--
+
+CREATE TABLE `servicios` (
+  `id_servicio` int(11) NOT NULL,
+  `titulo` varchar(100) NOT NULL,
+  `descripcion` text NOT NULL,
+  `imagen` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `servicios`
+--
+
+INSERT INTO `servicios` (`id_servicio`, `titulo`, `descripcion`, `imagen`) VALUES
+(1, 'niños', 'mayores', '1751321812019.jfif'),
+(2, 'mis 1er año', 'caminan  mmm', '1751322047977.jpg'),
+(4, 'Atencion a Mayores', 'Abuelitos', '1751467760526.jfif');
 
 -- --------------------------------------------------------
 
@@ -221,7 +257,8 @@ INSERT INTO `usuarios` (`id_usuarios`, `email`, `contrasena`, `fecha_baja`) VALU
 (27, 'luistrech9@gmail.com', '$2a$08$OqIjlvp77y9aCKXBDbyLiuJTTuw.bZSWeRgF1T/GU0gPcgeE0QqH6', '2025-04-24'),
 (28, 'gago@gmail.com', '$2a$08$WUt41BF0hQUjfKx/wvkENOaKU1AFi5iXVZp09x5.3IeX5BK80fxAG', NULL),
 (29, 'nancyvera@gmail.com', '$2a$08$/ISQYqofsOJMyOvzIikV6uhSde7Z94R6C6XFW5txQiNyUEAUwBw2S', NULL),
-(30, 'nancyvera2@gmail.com', '$2a$08$bLUkhyhKXfWvBuF3GRwwxuFOTjY6xrPj0tKXosteJ6c7zgKOZ4fkm', NULL);
+(30, 'nancyvera2@gmail.com', '$2a$08$bLUkhyhKXfWvBuF3GRwwxuFOTjY6xrPj0tKXosteJ6c7zgKOZ4fkm', NULL),
+(31, 'diegomaradona@gmail.com', '$2a$08$izIfR2I3EpJxMp0cmf7/.uUu9nRk3IkoNQ0.SvIVEJ9FPg1.chhya', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -235,10 +272,10 @@ ALTER TABLE `historia_clinica`
   ADD KEY `id_paciente` (`id_paciente`);
 
 --
--- Indices de la tabla `imagenes`
+-- Indices de la tabla `imagenes_inicio`
 --
-ALTER TABLE `imagenes`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `imagenes_inicio`
+  ADD PRIMARY KEY (`id_imagen`);
 
 --
 -- Indices de la tabla `pacientes`
@@ -261,6 +298,12 @@ ALTER TABLE `rol_por_usuario`
   ADD KEY `id_rol` (`id_rol`);
 
 --
+-- Indices de la tabla `servicios`
+--
+ALTER TABLE `servicios`
+  ADD PRIMARY KEY (`id_servicio`);
+
+--
 -- Indices de la tabla `tipo_sesion`
 --
 ALTER TABLE `tipo_sesion`
@@ -280,25 +323,31 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `historia_clinica`
 --
 ALTER TABLE `historia_clinica`
-  MODIFY `id_hc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_hc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT de la tabla `imagenes`
+-- AUTO_INCREMENT de la tabla `imagenes_inicio`
 --
-ALTER TABLE `imagenes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `imagenes_inicio`
+  MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `Id_pacientes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `Id_pacientes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
   MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `servicios`
+--
+ALTER TABLE `servicios`
+  MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_sesion`
@@ -310,7 +359,7 @@ ALTER TABLE `tipo_sesion`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuarios` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_usuarios` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Restricciones para tablas volcadas
